@@ -10,7 +10,7 @@ import './ProductDetailPage.css';
 const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const { authenticated, loading } = useAuth();
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
@@ -20,11 +20,17 @@ const ProductDetailPage = () => {
     .filter((p) => p.categoryId === product?.categoryId && p.id !== product?.id)
     .slice(0, 4);
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/login');
+    useEffect(() => {
+      if (!loading && !authenticated) {
+        navigate('/login');
+      }
+    }, [authenticated, loading, navigate]);
+  
+    if (loading) return null;  
+  
+    if (!authenticated) {
+      return null;
     }
-  }, [isAuthenticated, navigate]);
 
   if (!product) {
     return (

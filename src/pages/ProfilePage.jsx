@@ -5,16 +5,18 @@ import Navbar from '../components/Navbar';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
-  const { isAuthenticated, user } = useAuth();
+  const { authenticated,loading, user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!loading && !authenticated) {
       navigate('/login');
     }
-  }, [isAuthenticated, navigate]);
+  }, [authenticated, loading, navigate]);
 
-  if (!isAuthenticated) {
+  if (loading) return null;  
+
+  if (!authenticated) {
     return null;
   }
 

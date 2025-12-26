@@ -7,7 +7,6 @@ import { products, categories } from '../data/mockData';
 import './Dashboard.css';
 
 const Dashboard = () => {
-  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -15,12 +14,16 @@ const Dashboard = () => {
   const [minRating, setMinRating] = useState(0);
   const [sortBy, setSortBy] = useState('popularity');
   const [searchQuery, setSearchQuery] = useState('');
-
+  
+  const { authenticated, loading } = useAuth();
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!loading && !authenticated) {
       navigate('/login');
     }
-  }, [isAuthenticated, navigate]);
+  }, [authenticated, loading, navigate]);
+
+  if (loading) return null;
+
 
   useEffect(() => {
     let filtered = [...products];
@@ -59,14 +62,14 @@ const Dashboard = () => {
     setFilteredProducts(filtered);
   }, [selectedCategory, priceRange, minRating, sortBy, searchQuery]);
 
-  if (!isAuthenticated) {
+  if (!authenticated) {
     return null;
   }
 
   return (
     <div className="dashboard">
-      <Navbar 
-        variant="dashboard" 
+      <Navbar
+        variant="dashboard"
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
       />

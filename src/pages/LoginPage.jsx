@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import api from '../utils/axios';
 import './AuthPage.css';
 
 const LoginPage = () => {
@@ -8,24 +9,32 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { login } = useAuth();
+  const { checkAuth } = useAuth(); 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
+  
     if (!email || !password) {
       setError('Please fill in all fields');
       return;
     }
-
-    const result = login(email, password);
-    if (result.success) {
+  
+    try {
+      await api.post('/api/auth/login', { email, password });
+  
+      // 🔥 IMPORTANT: sync auth state
+      await checkAuth();
+  
       navigate('/dashboard');
-    } else {
-      setError('Invalid credentials');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Invalid credentials');
     }
   };
+  
+  
 
   return (
     <div className="auth-page">

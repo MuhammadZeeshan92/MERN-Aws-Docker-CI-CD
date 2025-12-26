@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import api from '../utils/axios.js';
+
 import './AuthPage.css';
 
 const SignupPage = () => {
@@ -12,32 +14,45 @@ const SignupPage = () => {
   const { signup } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
+  
+    // 1️⃣ Client-side validation
     if (!name || !email || !password || !confirmPassword) {
       setError('Please fill in all fields');
       return;
     }
-
+  
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-
+  
     if (password.length < 6) {
       setError('Password must be at least 6 characters');
       return;
     }
-
-    const result = signup(name, email, password);
-    if (result.success) {
+  
+    try {
+      // 2️⃣ Call backend signup API
+      await api.post('/api/auth/signup', {
+        username:name,
+        email,
+        password,
+      });
+  
+      // 3️⃣ Redirect to login after successful signup
       navigate('/login');
-    } else {
-      setError('Signup failed. Please try again.');
+  
+    } catch (err) {
+      // 4️⃣ Handle backend errors safely
+      const message =
+        err.response?.data?.message || 'Signup failed. Please try again.';
+      setError(message);
     }
   };
+  
 
   return (
     <div className="auth-page">

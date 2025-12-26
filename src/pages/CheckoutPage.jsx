@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar';
 import './CheckoutPage.css';
 
 const CheckoutPage = () => {
-  const { isAuthenticated } = useAuth();
+  const { authenticated, loading } = useAuth();
   const { cartItems, getCartTotal, clearCart } = useCart();
   const navigate = useNavigate();
   const [orderPlaced, setOrderPlaced] = useState(false);
@@ -22,14 +22,18 @@ const CheckoutPage = () => {
     country: 'United States',
   });
 
+
+  if (loading) return null;
+
+
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!loading && !authenticated) {
       navigate('/login');
     }
     if (cartItems.length === 0 && !orderPlaced) {
       navigate('/cart');
     }
-  }, [isAuthenticated, cartItems.length, navigate, orderPlaced]);
+  }, [authenticated,authenticated, cartItems.length, navigate, orderPlaced]);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -45,7 +49,7 @@ const CheckoutPage = () => {
     setOrderPlaced(true);
   };
 
-  if (!isAuthenticated || cartItems.length === 0) {
+  if (!authenticated || cartItems.length === 0) {
     return null;
   }
 

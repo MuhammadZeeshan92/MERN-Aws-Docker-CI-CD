@@ -126,8 +126,11 @@
   flex-direction: column;
 }
 
-.user-dropdown:hover .dropdown-menu {
+.dropdown-menu {
   display: flex;
+}
+.hide-dropdown-menu{
+  display: none;
 }
 
 .dropdown-menu a,

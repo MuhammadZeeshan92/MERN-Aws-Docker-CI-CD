@@ -5,18 +5,21 @@ import Navbar from '../components/Navbar';
 import './OrdersPage.css';
 
 const OrdersPage = () => {
-  const { isAuthenticated } = useAuth();
+  const { authenticated,loading } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!loading && !authenticated) {
       navigate('/login');
     }
-  }, [isAuthenticated, navigate]);
+  }, [authenticated, loading, navigate]);
 
-  if (!isAuthenticated) {
+  if (loading) return null;  
+
+  if (!authenticated) {
     return null;
   }
+
 
   return (
     <div className="orders-page">

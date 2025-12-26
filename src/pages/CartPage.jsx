@@ -6,17 +6,19 @@ import Navbar from '../components/Navbar';
 import './CartPage.css';
 
 const CartPage = () => {
-  const { isAuthenticated } = useAuth();
+  const { authenticated, loading } = useAuth();
   const { cartItems, updateQuantity, removeFromCart, getCartTotal } = useCart();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!loading && !authenticated) {
       navigate('/login');
     }
-  }, [isAuthenticated, navigate]);
+  }, [authenticated, loading, navigate]);
 
-  if (!isAuthenticated) {
+  if (loading) return null;  
+
+  if (!authenticated) {
     return null;
   }
 

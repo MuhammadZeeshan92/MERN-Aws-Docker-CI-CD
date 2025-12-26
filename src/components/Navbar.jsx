@@ -1,16 +1,37 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import logo from '../assets/logo.png';
+import api from '../utils/axios'
 import './Navbar.css';
 
 const Navbar = ({ variant = 'public', searchQuery, onSearchChange }) => {
   const { user, logout, isAuthenticated } = useAuth();
+  const [show,setShow]=useState(false)
   const { getCartItemCount } = useCart();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
+
+  const handleDropDown=()=>{
+    setShow(!show)
+  }
+
+  const handleLogout = async () => {
+    
+    const logout = async () => {
+      try {
+        // 🔹 Clear JWT cookie on backend
+        await api.post('/api/auth/logout');
+      } catch (error) {
+        // ignore backend error
+      } finally {
+        // 🔹 Update frontend auth state
+        // setAuthenticated(false);
+      }
+    };
     logout();
+    
     navigate('/');
   };
 
@@ -38,10 +59,10 @@ const Navbar = ({ variant = 'public', searchQuery, onSearchChange }) => {
               )}
             </Link>
             <div className="user-dropdown">
-              <button className="user-menu-btn">
+              <button onClick={handleDropDown} className="user-menu-btn">
                 {user?.name || 'User'} ▼
               </button>
-              <div className="dropdown-menu">
+              <div className={`${show ? 'dropdown-menu' : 'hide-dropdown-menu'}`}>
                 <Link to="/profile">Profile</Link>
                 <Link to="/orders">Orders</Link>
                 <button onClick={handleLogout}>Logout</button>
