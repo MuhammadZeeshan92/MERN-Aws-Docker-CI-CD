@@ -2,11 +2,13 @@
   min-height: 100vh;
   background: #f9f9f9;
   padding-bottom: 4rem;
+  animation: fadeIn 0.6s ease-out;
 }
 
 .checkout-page h1 {
   color: #1D2B5E;
   margin: 2rem 0;
+  animation: fadeInDown 0.6s ease-out;
 }
 
 .checkout-content {
@@ -20,6 +22,12 @@
   border-radius: 8px;
   padding: 2rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeInLeft 0.8s ease-out;
+  transition: transform 0.3s ease;
+}
+
+.checkout-form-section:hover {
+  transform: translateY(-5px);
 }
 
 .checkout-form-section h2 {
@@ -57,12 +65,15 @@
   border-radius: 4px;
   font-size: 1rem;
   font-family: inherit;
+  transition: all 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
   border-color: #17808A;
+  transform: scale(1.02);
+  box-shadow: 0 0 0 3px rgba(23, 128, 138, 0.1);
 }
 
 .btn-large {
@@ -79,6 +90,12 @@
   height: fit-content;
   position: sticky;
   top: 100px;
+  animation: fadeInRight 0.8s ease-out;
+  transition: transform 0.3s ease;
+}
+
+.order-summary:hover {
+  transform: translateY(-5px);
 }
 
 .order-summary h2 {
@@ -99,7 +116,13 @@
   display: flex;
   gap: 1rem;
   align-items: center;
+  animation: fadeInRight 0.6s ease-out both;
 }
+
+.order-item:nth-child(1) { animation-delay: 0.1s; }
+.order-item:nth-child(2) { animation-delay: 0.2s; }
+.order-item:nth-child(3) { animation-delay: 0.3s; }
+.order-item:nth-child(4) { animation-delay: 0.4s; }
 
 .order-item img {
   width: 60px;
@@ -157,6 +180,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   max-width: 600px;
   margin: 4rem auto;
+  animation: scaleIn 0.6s ease-out;
 }
 
 .confirmation-icon {
@@ -170,6 +194,7 @@
   justify-content: center;
   font-size: 3rem;
   margin: 0 auto 2rem;
+  animation: scaleIn 0.6s ease-out, bounce 1s ease-out 0.6s;
 }
 
 .order-confirmation h1 {

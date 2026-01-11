@@ -5,6 +5,7 @@ import connectDB from './config/db.js';
 import userRoutes from './routes/user.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import cookieParser from 'cookie-parser';
+import ordersRouter from './routes/order.route.js';
 
 
 dotenv.config();
@@ -25,9 +26,11 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
+
 connectDB();
 
 
+app.use('/api/orders', ordersRouter);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 

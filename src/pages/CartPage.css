@@ -2,11 +2,13 @@
   min-height: 100vh;
   background: #f9f9f9;
   padding-bottom: 4rem;
+  animation: fadeIn 0.6s ease-out;
 }
 
 .cart-page h1 {
   color: #1D2B5E;
   margin: 2rem 0;
+  animation: fadeInDown 0.6s ease-out;
 }
 
 .cart-content {
@@ -30,6 +32,19 @@
   gap: 1.5rem;
   align-items: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeInLeft 0.6s ease-out both;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cart-item:nth-child(1) { animation-delay: 0.1s; }
+.cart-item:nth-child(2) { animation-delay: 0.2s; }
+.cart-item:nth-child(3) { animation-delay: 0.3s; }
+.cart-item:nth-child(4) { animation-delay: 0.4s; }
+.cart-item:nth-child(5) { animation-delay: 0.5s; }
+
+.cart-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .cart-item-image {
@@ -44,6 +59,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.cart-item-image:hover img {
+  transform: scale(1.1);
 }
 
 .cart-item-info {
@@ -111,7 +131,12 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 1.2rem;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
+}
+
+.remove-btn:hover {
+  background: #fcc;
+  transform: rotate(90deg) scale(1.1);
 }
 
 .remove-btn:hover {
@@ -126,6 +151,12 @@
   height: fit-content;
   position: sticky;
   top: 100px;
+  animation: fadeInRight 0.8s ease-out;
+  transition: transform 0.3s ease;
+}
+
+.cart-summary:hover {
+  transform: translateY(-5px);
 }
 
 .cart-summary h2 {
@@ -163,6 +194,7 @@
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  animation: scaleIn 0.6s ease-out;
 }
 
 .empty-cart h2 {

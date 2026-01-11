@@ -1,3 +1,6 @@
+/* Import animations */
+@import './styles/animations.css';
+
 :root {
   /* Logo Colors */
   --teal-blue: #17808A;
@@ -92,6 +95,7 @@ button:focus-visible {
 
 .btn-primary:hover {
   background-color: var(--orange);
+  color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(243, 127, 38, 0.3);
 }
@@ -126,3 +130,10 @@ button:focus-visible {
     padding: 0 1rem;
   }
 }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+

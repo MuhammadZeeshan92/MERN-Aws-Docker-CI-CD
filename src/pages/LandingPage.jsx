@@ -22,8 +22,14 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page">
-      <Navbar />
-      
+      <Navbar
+        onHomeClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        onAboutClick={() => scrollToSection(aboutRef)}
+        onProductsClick={() => scrollToSection(productsRef)}
+        onContactClick={() => scrollToSection(contactRef)}
+      />
+
+
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-container">
@@ -31,7 +37,7 @@ const LandingPage = () => {
             <h1>Welcome to Quick Pick</h1>
             <p className="hero-subtitle">Fast Delivery & Service</p>
             <p className="hero-description">
-              Your one-stop shop for quality products delivered right to your doorstep. 
+              Your one-stop shop for quality products delivered right to your doorstep.
               Experience the fastest delivery service with exceptional customer care.
             </p>
             <Link to={isAuthenticated ? "/dashboard" : "/login"} className="btn-primary btn-large">
@@ -69,14 +75,14 @@ const LandingPage = () => {
           <div className="about-content">
             <div className="about-text">
               <p>
-                Quick Pick is your trusted partner for fast and reliable delivery services. 
-                We understand that time is valuable, which is why we've built a platform 
+                Quick Pick is your trusted partner for fast and reliable delivery services.
+                We understand that time is valuable, which is why we've built a platform
                 that prioritizes speed without compromising on quality.
               </p>
               <p>
-                Our mission is to provide exceptional service and deliver products to your 
-                doorstep with unmatched efficiency. Whether you're shopping for electronics, 
-                clothing, home essentials, or gifts, Quick Pick ensures a seamless shopping 
+                Our mission is to provide exceptional service and deliver products to your
+                doorstep with unmatched efficiency. Whether you're shopping for electronics,
+                clothing, home essentials, or gifts, Quick Pick ensures a seamless shopping
                 experience from browsing to delivery.
               </p>
               <ul className="about-features">

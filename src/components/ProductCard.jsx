@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import './ProductCard.css';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = ({ product, showCategory = false }) => {
-  const { addToCart } = useCart();
+  const navigate = useNavigate();
 
   const handleAddToCart = (e) => {
     e.preventDefault();
-    addToCart(product, 1);
+      navigate('/login');
+      return;
   };
 
   return (

@@ -6,19 +6,26 @@ import logo from '../assets/logo.png';
 import api from '../utils/axios'
 import './Navbar.css';
 
-const Navbar = ({ variant = 'public', searchQuery, onSearchChange }) => {
+const Navbar = ({
+  variant = 'public',
+  searchQuery,
+  onSearchChange,
+  onHomeClick,
+  onAboutClick,
+  onProductsClick,
+  onContactClick }) => {
   const { user, logout, isAuthenticated } = useAuth();
-  const [show,setShow]=useState(false)
+  const [show, setShow] = useState(false)
   const { getCartItemCount } = useCart();
   const navigate = useNavigate();
 
 
-  const handleDropDown=()=>{
+  const handleDropDown = () => {
     setShow(!show)
   }
 
   const handleLogout = async () => {
-    
+
     const logout = async () => {
       try {
         // 🔹 Clear JWT cookie on backend
@@ -31,7 +38,7 @@ const Navbar = ({ variant = 'public', searchQuery, onSearchChange }) => {
       }
     };
     logout();
-    
+
     navigate('/');
   };
 
@@ -43,9 +50,9 @@ const Navbar = ({ variant = 'public', searchQuery, onSearchChange }) => {
             <img src={logo} alt="Quick Pick" />
           </Link>
           <div className="navbar-search">
-            <input 
-              type="text" 
-              placeholder="Search products..." 
+            <input
+              type="text"
+              placeholder="Search products..."
               value={searchQuery || ''}
               onChange={(e) => onSearchChange?.(e.target.value)}
             />
@@ -81,11 +88,12 @@ const Navbar = ({ variant = 'public', searchQuery, onSearchChange }) => {
           <img src={logo} alt="Quick Pick" />
         </Link>
         <ul className="navbar-menu">
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/#about">About</Link></li>
-          <li><Link to="/#products">Products</Link></li>
-          <li><Link to="/#contact">Contact</Link></li>
+          <li><button onClick={onHomeClick}>Home</button></li>
+          <li><button onClick={onAboutClick}>About</button></li>
+          <li><button onClick={onProductsClick}>Products</button></li>
+          <li><button onClick={onContactClick}>Contact</button></li>
         </ul>
+
         <div className="navbar-right">
           {isAuthenticated ? (
             <>

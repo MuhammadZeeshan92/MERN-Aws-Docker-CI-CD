@@ -4,12 +4,12 @@
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  animation: slideInDown 0.6s ease-out;
 }
 
 .navbar-container {
   height: 130px;
   max-width: 1200px;
-  padding-bottom: 0.2rem;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -19,6 +19,11 @@
 .navbar-logo img {
   height: 140px;
   width: auto;
+  transition: transform 0.3s ease;
+}
+
+.navbar-logo:hover img {
+  transform: scale(1.1) rotate(5deg);
 }
 
 .navbar-menu {
@@ -33,12 +38,48 @@
   text-decoration: none;
   color: #1D2B5E;
   font-weight: 500;
-  transition: color 0.3s;
+  transition: all 0.3s ease;
+  position: relative;
+  animation: fadeInDown 0.6s ease-out both;
 }
+
+.navbar-menu li:nth-child(1) a { animation-delay: 0.1s; }
+.navbar-menu li:nth-child(2) a { animation-delay: 0.2s; }
+.navbar-menu li:nth-child(3) a { animation-delay: 0.3s; }
+.navbar-menu li:nth-child(4) a { animation-delay: 0.4s; }
 
 .navbar-menu a:hover {
   color: #17808A;
+  transform: translateY(-3px);
 }
+
+.navbar-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #17808A;
+  transition: width 0.3s ease;
+}
+
+.navbar-menu a:hover::after {
+  width: 100%;
+}
+
+.navbar-menu button {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.navbar-menu button:hover {
+  text-decoration: underline;
+}
+
 
 .navbar-right {
   display: flex;
@@ -51,6 +92,12 @@
   font-size: 1.5rem;
   text-decoration: none;
   color: #1D2B5E;
+  transition: transform 0.3s ease;
+  animation: fadeInRight 0.6s ease-out;
+}
+
+.cart-icon:hover {
+  transform: scale(1.2) rotate(-15deg);
 }
 
 .cart-badge {
@@ -67,6 +114,7 @@
   justify-content: center;
   font-size: 0.75rem;
   font-weight: bold;
+  animation: pulse 2s ease-in-out infinite;
 }
 
 /* Dashboard Navbar */
@@ -128,7 +176,9 @@
 
 .dropdown-menu {
   display: flex;
+  animation: fadeInDown 0.3s ease-out;
 }
+
 .hide-dropdown-menu{
   display: none;
 }
@@ -148,6 +198,8 @@
 .dropdown-menu a:hover,
 .dropdown-menu button:hover {
   background: #f5f5f5;
+  transform: translateX(5px);
+  transition: all 0.3s ease;
 }
 
 @media (max-width: 768px) {

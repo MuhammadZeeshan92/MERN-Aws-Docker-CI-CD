@@ -2,11 +2,13 @@
   min-height: 100vh;
   background: #f9f9f9;
   padding-bottom: 4rem;
+  animation: fadeIn 0.6s ease-out;
 }
 
 .orders-page h1 {
   color: #1D2B5E;
   margin: 2rem 0;
+  animation: fadeInDown 0.6s ease-out;
 }
 
 .orders-content {
@@ -15,6 +17,12 @@
   padding: 4rem 2rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+  animation: scaleIn 0.6s ease-out;
+  transition: transform 0.3s ease;
+}
+
+.orders-content:hover {
+  transform: scale(1.02);
 }
 
 .empty-state p {
