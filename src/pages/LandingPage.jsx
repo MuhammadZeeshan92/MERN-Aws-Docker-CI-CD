@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import ProductCard from '../components/ProductCard';
+import LandingProductCard from '../components/LandingProductCard';
 import { products } from '../data/mockData';
 import logo from '../assets/logo.png';
 import './LandingPage.css';
@@ -56,7 +56,7 @@ const LandingPage = () => {
           <h2>Featured Products</h2>
           <div className="products-grid">
             {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <LandingProductCard key={product.id} product={product} />
             ))}
           </div>
           {!isAuthenticated && (

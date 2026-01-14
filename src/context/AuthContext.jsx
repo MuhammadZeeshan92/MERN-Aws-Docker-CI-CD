@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }) => {
         <AuthContext.Provider
             value={{
                 authenticated,
+                isAuthenticated: authenticated, // Alias for consistency
                 loading,
                 checkAuth,
                 logout

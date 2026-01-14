@@ -264,7 +264,7 @@ const CheckoutPage = () => {
   const { authenticated, loading, user, token } = useAuth(); // user and token expected
   const { cartItems, getCartTotal, clearCart } = useCart();
   const navigate = useNavigate();
-  const [orderPlaced, setOrderPlaced] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -277,9 +277,10 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     if (!loading && !authenticated) navigate('/login');
-    if (cartItems.length === 0 && !orderPlaced) navigate('/cart');
+    // Don't redirect if modal is showing (order was just placed)
+    if (cartItems.length === 0 && !showModal && !loadingSubmit) navigate('/cart');
   // removed duplicate dependency and cleaned up
-  }, [authenticated, loading, cartItems.length, navigate, orderPlaced]);
+  }, [authenticated, loading, cartItems.length, navigate, showModal, loadingSubmit]);
 
   // autofill name/email when user becomes available
   useEffect(() => {
@@ -325,9 +326,12 @@ const CheckoutPage = () => {
         throw new Error(err.message || 'Order failed');
       }
 
-      // success
-      clearCart();
-      setOrderPlaced(true);
+      // success - show modal first, then clear cart
+      setShowModal(true);
+      // Clear cart after a small delay to ensure modal renders
+      setTimeout(() => {
+        clearCart();
+      }, 100);
     } catch (err) {
       console.error('Order error', err);
       alert('Could not place order: ' + err.message);
@@ -336,27 +340,13 @@ const CheckoutPage = () => {
     }
   };
 
-  if (!authenticated || cartItems.length === 0) return null;
+  const handleModalClose = () => {
+    setShowModal(false);
+    navigate('/dashboard');
+  };
 
-  if (orderPlaced) {
-    return (
-      <div className="checkout-page">
-        <Navbar variant="dashboard" />
-        <div className="container">
-          <div className="order-confirmation">
-            <div className="confirmation-icon">✓</div>
-            <h1>Order Placed Successfully!</h1>
-            <p>Thank you for your order. Your order number is #12345</p>
-            <p>You will receive a confirmation email shortly.</p>
-            <div className="confirmation-actions">
-              <Link to="/dashboard" className="btn-primary">Continue Shopping</Link>
-              <Link to="/orders" className="btn-secondary">View Orders</Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Don't return null if modal is showing (order was just placed)
+  if (!authenticated || (cartItems.length === 0 && !showModal)) return null;
 
   const subtotal = getCartTotal();
   const shipping = 10;
@@ -364,11 +354,27 @@ const CheckoutPage = () => {
   const total = subtotal + shipping + tax;
 
   return (
-    <div className="checkout-page">
-      <Navbar variant="dashboard" />
-      <div className="container">
-        <h1>Checkout</h1>
-        <div className="checkout-content">
+    <>
+      {/* Order Confirmation Modal */}
+      {showModal && (
+        <div className="modal-overlay" onClick={handleModalClose}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-confirmation-icon">✓</div>
+            <h2>Order Confirmed!</h2>
+            <p>Your order has been placed successfully.</p>
+            <p>You will receive a confirmation email shortly.</p>
+            <button className="btn-primary btn-large" onClick={handleModalClose}>
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div className="checkout-page">
+        <Navbar variant="dashboard" />
+        <div className="container">
+          <h1>Checkout</h1>
+          <div className="checkout-content">
           <div className="checkout-form-section">
             <h2>Shipping / Contact</h2>
             <form onSubmit={handleSubmit} className="checkout-form">
@@ -424,6 +430,7 @@ const CheckoutPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

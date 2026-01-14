@@ -1,15 +1,12 @@
-import { Link } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
+import { Link, useNavigate } from 'react-router-dom';
 import './ProductCard.css';
 
-const ProductCard = ({ product, showCategory = false }) => {
-  const { addToCart } = useCart();
+const LandingProductCard = ({ product }) => {
+  const navigate = useNavigate();
 
   const handleAddToCart = (e) => {
     e.preventDefault();
-    addToCart(product, 1);
-    // Optional: Show a toast notification or feedback
-    // For now, we'll just add to cart silently
+    navigate('/login');
   };
 
   return (
@@ -22,9 +19,6 @@ const ProductCard = ({ product, showCategory = false }) => {
           </button>
         </div>
         <div className="product-info">
-          {showCategory && (
-            <span className="product-category">{product.category}</span>
-          )}
           <h3 className="product-name">{product.name}</h3>
           <div className="product-rating">
             {'★'.repeat(Math.floor(product.rating))}
@@ -45,5 +39,4 @@ const ProductCard = ({ product, showCategory = false }) => {
   );
 };
 
-export default ProductCard;
-
+export default LandingProductCard;
