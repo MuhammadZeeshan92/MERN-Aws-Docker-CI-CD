@@ -26,20 +26,16 @@ const Navbar = ({
 
   const handleLogout = async () => {
 
-    const logout = async () => {
       try {
         // 🔹 Clear JWT cookie on backend
-        await api.post('/api/auth/logout');
+        const res = await logout()
+        console.log(res);
       } catch (error) {
         // ignore backend error
       } finally {
         // 🔹 Update frontend auth state
         // setAuthenticated(false);
       }
-    };
-    logout();
-
-    navigate('/');
   };
 
   if (variant === 'dashboard') {

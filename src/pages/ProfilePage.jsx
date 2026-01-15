@@ -31,7 +31,7 @@ const ProfilePage = () => {
             <div className="profile-info">
               <div className="info-row">
                 <span className="label">Name:</span>
-                <span className="value">{user?.name || 'N/A'}</span>
+                <span className="value">{user?.username || 'N/A'}</span>
               </div>
               <div className="info-row">
                 <span className="label">Email:</span>

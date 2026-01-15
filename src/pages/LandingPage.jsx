@@ -20,6 +20,17 @@ const LandingPage = () => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handleSendMessage = async () => {
+    try{
+      const res = await api.post('/api/messages', { name, email, message });
+      console.log(res);
+    } catch (error) {
+      console.error('Error sending message', error);
+    } finally {
+      console.log('Message sent');
+    }
+  };
+
   return (
     <div className="landing-page">
       <Navbar
@@ -114,7 +125,7 @@ const LandingPage = () => {
                 <label htmlFor="message">Message</label>
                 <textarea id="message" name="message" rows="5" required></textarea>
               </div>
-              <button type="submit" className="btn-primary">
+              <button onClick={handleSendMessage} type="submit" className="btn-primary">
                 Send Message
               </button>
             </form>

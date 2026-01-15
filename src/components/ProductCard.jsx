@@ -17,9 +17,6 @@ const ProductCard = ({ product, showCategory = false }) => {
       <Link to={`/product/${product.id}`} className="product-link">
         <div className="product-image">
           <img src={product.image} alt={product.name} />
-          <button className="wishlist-btn" onClick={(e) => { e.preventDefault(); }}>
-            ♡
-          </button>
         </div>
         <div className="product-info">
           {showCategory && (
@@ -31,7 +28,7 @@ const ProductCard = ({ product, showCategory = false }) => {
             <span className="rating-value">{product.rating}</span>
           </div>
           <div className="product-footer">
-            <span className="product-price">${product.price.toFixed(2)}</span>
+            <span className="product-price">Rs.{product.price.toFixed(2)}</span>
             <button
               className="add-to-cart-btn"
               onClick={handleAddToCart}
@@ -46,4 +43,3 @@ const ProductCard = ({ product, showCategory = false }) => {
 };
 
 export default ProductCard;
-

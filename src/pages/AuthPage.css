@@ -6,7 +6,7 @@
   background: linear-gradient(135deg, #17808A 0%, #1D2B5E 100%);
   padding: 2rem;
   margin: auto;
-  width: 50%;
+  width: 100%;
   animation: fadeIn 0.6s ease-out;
 }
 
