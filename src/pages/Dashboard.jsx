@@ -14,6 +14,7 @@ const Dashboard = () => {
   const [minRating, setMinRating] = useState(0);
   const [sortBy, setSortBy] = useState('popularity');
   const [searchQuery, setSearchQuery] = useState('');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   
   const { authenticated, loading } = useAuth();
   useEffect(() => {
@@ -74,8 +75,23 @@ const Dashboard = () => {
         onSearchChange={setSearchQuery}
       />
       <div className="dashboard-container">
+
+        <button 
+        className="sidebar-toggle"
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
+        ☰
+      </button>
+
         {/* Sidebar */}
-        <aside className="dashboard-sidebar">
+        <aside className={`dashboard-sidebar ${sidebarOpen ? 'open' : ''}`}>
+          {/* Close button for mobile */}
+        <button 
+          className="sidebar-close"
+          onClick={() => setSidebarOpen(false)}
+        >
+          ✕
+        </button>
           <div className="sidebar-section">
             <h3>Categories</h3>
             <ul className="category-list">
