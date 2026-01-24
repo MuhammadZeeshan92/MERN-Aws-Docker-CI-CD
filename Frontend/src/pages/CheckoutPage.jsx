@@ -65,7 +65,6 @@ const CheckoutPage = () => {
         },
         body: JSON.stringify(orderPayload),
       });
-      console.log('Order response', res);
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({ message: 'Failed' }));
