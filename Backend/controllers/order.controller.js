@@ -30,6 +30,10 @@ export const createOrder = async (req, res) => {
 
     const teamEmail = process.env.TEAM_EMAIL || process.env.EMAIL_USER;
 
+    if (!teamEmail) {
+      console.warn("⚠️ Warning: TEAM_EMAIL and EMAIL_USER not configured");
+    }
+
     const itemsHtml = (items || []).map(i => {
       const price = Number(i.price ?? 0);
       const qty = Number(i.quantity ?? 0);
@@ -57,14 +61,25 @@ export const createOrder = async (req, res) => {
       `,
     };
 
+    let emailSent = false;
     try {
       const info = await transporter.sendMail(mailOptions);
       console.log("✅ Message sent:", info.messageId || info.response);
+      emailSent = true;
     } catch (e) {
-      console.error("❌ Mail error:", e);
+      console.error("❌ Mail error:", {
+        message: e.message,
+        code: e.code,
+        command: e.command,
+        response: e.response
+      });
     }
 
-    res.status(201).json({ orderId: saved._id, message: "Order placed" });
+    res.status(201).json({ 
+      orderId: saved._id, 
+      message: "Order placed",
+      emailSent: emailSent 
+    });
   } catch (err) {
     console.error("ORDER ERROR:", err);
     res.status(500).json({ message: "Server error" });
