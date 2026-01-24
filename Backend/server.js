@@ -13,8 +13,14 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 app.set("trust proxy", 1);
+
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'http://localhost:5173'
+].filter(Boolean);
+
 app.use(cors({
-    origin: process.env.FRONTEND_URL, // e.g., https://your-app.vercel.app
+    origin: allowedOrigins, // e.g., https://your-app.vercel.app
     credentials: true,               // Allows cookies to be sent/received
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"]
