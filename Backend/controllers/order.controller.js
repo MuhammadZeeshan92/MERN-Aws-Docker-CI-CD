@@ -37,9 +37,11 @@ export const createOrder = async (req, res) => {
       `,
     };
 
-    transporter.sendMail(mailOptions, (err, info) => {
+    const info = await transporter.sendMail(mailOptions, (err, info) => {
       if (err) console.error('Mail error', err);
     });
+
+    console.log("Message sent:", info.messageId);
 
     res.status(201).json({ orderId: saved._id, message: 'Order placed' });
   } catch (err) {
