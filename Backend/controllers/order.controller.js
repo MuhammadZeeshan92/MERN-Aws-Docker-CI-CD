@@ -4,16 +4,6 @@ import transporter from '../utils/nodemailer.js';
 
 export const createOrder = async (req, res) => {
 
-  console.log("🔍 EMAIL CONFIG CHECK:", {
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
-    secure: process.env.EMAIL_SECURE,
-    user: process.env.EMAIL_USER,
-    teamEmail: process.env.TEAM_EMAIL,
-    passExists: !!process.env.EMAIL_PASS,
-    passLength: process.env.EMAIL_PASS?.length
-  });
-
   try {
     const { userId, name, email, phone, isUmtStudent, items, subtotal, shipping, tax, total } = req.body;
 
@@ -75,7 +65,7 @@ export const createOrder = async (req, res) => {
     let emailSent = false;
     try {
       const info = await transporter.sendMail(mailOptions);
-      console.log("✅ Message sent:", info.messageId || info.response);
+      console.log("✅ Message sent:");
       emailSent = true;
     } catch (e) {
       console.error("❌ Mail error:", {
