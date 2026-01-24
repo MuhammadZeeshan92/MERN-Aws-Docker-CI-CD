@@ -25,7 +25,7 @@ const CheckoutPage = () => {
     if (!loading && !authenticated) navigate('/login');
     // Don't redirect if modal is showing (order was just placed)
     if (cartItems.length === 0 && !showModal && !loadingSubmit) navigate('/cart');
-  // removed duplicate dependency and cleaned up
+    // removed duplicate dependency and cleaned up
   }, [authenticated, loading, cartItems.length, navigate, showModal, loadingSubmit]);
 
   // autofill name/email when user becomes available
@@ -120,61 +120,67 @@ const CheckoutPage = () => {
         <div className="container">
           <h1>Checkout</h1>
           <div className="checkout-content">
-          <div className="checkout-form-section">
-            <h2>Shipping / Contact</h2>
-            <form onSubmit={handleSubmit} className="checkout-form">
-              <div className="form-group">
-                <label htmlFor="name">Full Name</label>
-                <input id="name" name="name" value={formData.name} onChange={handleInputChange} required />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} required />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="phone">Phone</label>
-                <input id="phone" name="phone" value={formData.phone} onChange={handleInputChange} required />
-              </div>
-
-              <div className="form-group">
-                <label>
-                  <input type="checkbox" name="isUmtStudent" checked={formData.isUmtStudent} onChange={handleInputChange} />
-                  {' '}I am a UMT student
-                </label>
-              </div>
-
-              <button type="submit" className="btn-primary btn-large" disabled={loadingSubmit}>
-                {loadingSubmit ? 'Placing order...' : 'Place Order'}
-              </button>
-            </form>
-          </div>
-
-          <div className="order-summary">
-            <h2>Order Summary</h2>
-            <div className="order-items">
-              {cartItems.map(item => (
-                <div key={item.id} className="order-item">
-                  <img src={item.image} alt={item.name} />
-                  <div className="order-item-info">
-                    <h4>{item.name}</h4>
-                    <p>Qty: {item.quantity}</p>
-                  </div>
-                  <div className="order-item-price">${(item.price * item.quantity).toFixed(2)}</div>
+            <div className="checkout-form-section">
+              <h2>Shipping / Contact</h2>
+              <form onSubmit={handleSubmit} className="checkout-form">
+                <div className="form-group">
+                  <label htmlFor="name">Full Name</label>
+                  <input id="name" name="name" value={formData.name} onChange={handleInputChange} required />
                 </div>
-              ))}
+
+                <div className="form-group">
+                  <label htmlFor="email">Email</label>
+                  <input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} required />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="phone">Phone</label>
+                  <input id="phone" name="phone" value={formData.phone} onChange={handleInputChange} required />
+                </div>
+
+                <label className="custom-checkbox">
+                  <input
+                    type="checkbox"
+                    name="isUmtStudent"
+                    checked={formData.isUmtStudent}
+                    onChange={handleInputChange}
+                  />
+                  <span className="checkmark"></span>
+                  I am a UMT student
+                </label>
+
+
+
+                <button type="submit" className="btn-primary btn-large" disabled={loadingSubmit}>
+                  {loadingSubmit ? 'Placing order...' : 'Place Order'}
+                </button>
+              </form>
             </div>
-            <div className="order-totals">
-              <div className="total-row"><span>Subtotal:</span><span>${subtotal.toFixed(2)}</span></div>
-              <div className="total-row"><span>Shipping:</span><span>${shipping.toFixed(2)}</span></div>
-              <div className="total-row"><span>Tax:</span><span>${tax.toFixed(2)}</span></div>
-              <div className="total-row final"><span>Total:</span><span>${total.toFixed(2)}</span></div>
+
+            <div className="order-summary">
+              <h2>Order Summary</h2>
+              <div className="order-items">
+                {cartItems.map(item => (
+                  <div key={item.id} className="order-item">
+                    <img src={item.image} alt={item.name} />
+                    <div className="order-item-info">
+                      <h4>{item.name}</h4>
+                      <p>Qty: {item.quantity}</p>
+                    </div>
+                    <div className="order-item-price">${(item.price * item.quantity).toFixed(2)}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="order-totals">
+                <div className="total-row"><span>Subtotal:</span><span>${subtotal.toFixed(2)}</span></div>
+                <div className="total-row"><span>Shipping:</span><span>${shipping.toFixed(2)}</span></div>
+                <div className="total-row"><span>Tax:</span><span>${tax.toFixed(2)}</span></div>
+                <div className="total-row final"><span>Total:</span><span>${total.toFixed(2)}</span></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </>
   );
 };
