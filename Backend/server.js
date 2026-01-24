@@ -13,18 +13,14 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-app.use(cors(
-    {
-        origin: 'http://localhost:5173',
-        credentials: true,
-    }
-));
+app.use(cors({
+    origin: process.env.FRONTEND_URL, // e.g., https://your-app.vercel.app
+    credentials: true,               // Allows cookies to be sent/received
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+  }));
 app.use(express.json());
 app.use(cookieParser());
-
-app.get('/', (req, res) => {
-    res.send('Hello World');
-});
 
 
 connectDB();
@@ -33,6 +29,7 @@ connectDB();
 app.use('/api/orders', ordersRouter);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.get("/health", (req, res) => res.status(200).send("Server is up"));
 
 
 app.listen(PORT, () => {
