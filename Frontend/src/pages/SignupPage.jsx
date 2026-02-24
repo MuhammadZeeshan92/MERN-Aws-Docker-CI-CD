@@ -11,12 +11,14 @@ const SignupPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { signup } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
   
     // 1️⃣ Client-side validation
     if (!name || !email || !password || !confirmPassword) {
@@ -50,6 +52,8 @@ const SignupPage = () => {
       const message =
         err.response?.data?.message || 'Signup failed. Please try again.';
       setError(message);
+    } finally {
+      setIsLoading(false);
     }
   };
   
@@ -112,8 +116,8 @@ const SignupPage = () => {
               />
             </div>
 
-            <button type="submit" className="btn-primary btn-full">
-              Sign Up
+            <button type="submit" className="btn-primary btn-full" disabled={isLoading}>
+              {isLoading ? 'Signing up...' : 'Sign Up'}
             </button>
           </form>
 

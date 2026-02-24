@@ -8,6 +8,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const { checkAuth } = useAuth(); 
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
   
     if (!email || !password) {
       setError('Please fill in all fields');
@@ -31,6 +33,8 @@ const LoginPage = () => {
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Invalid credentials');
+    } finally {
+      setIsLoading(false);
     }
   };
   
@@ -70,8 +74,8 @@ const LoginPage = () => {
               />
             </div>
 
-            <button type="submit" className="btn-primary btn-full">
-              Login
+            <button type="submit" className="btn-primary btn-full" disabled={isLoading}>
+              {isLoading ? 'Logging in...' : 'Login'}
             </button>
           </form>
 
