@@ -25,7 +25,7 @@ const LandingPage = () => {
   const handleSendMessage = (e) => {
     try{
       e.preventDefault();
-      navigate('login')
+      navigate('/login')
     } catch (error) {
       console.error('Error sending message', error);
     } finally {
