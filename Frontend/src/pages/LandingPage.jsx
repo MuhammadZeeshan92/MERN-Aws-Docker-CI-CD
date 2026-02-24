@@ -114,7 +114,7 @@ const LandingPage = () => {
         <div className="container">
           <h2>Get in Touch</h2>
           <div className="contact-content">
-            <form className="contact-form">
+            <form onSubmit={handleSendMessage} className="contact-form">
               <div className="form-group">
                 <label htmlFor="name">Name</label>
                 <input type="text" id="name" name="name" required />
@@ -127,7 +127,7 @@ const LandingPage = () => {
                 <label htmlFor="message">Message</label>
                 <textarea id="message" name="message" rows="5" required></textarea>
               </div>
-              <button onClick={handleSendMessage} type="submit" className="btn-primary">
+              <button type="submit" className="btn-primary">
                 Send Message
               </button>
             </form>
