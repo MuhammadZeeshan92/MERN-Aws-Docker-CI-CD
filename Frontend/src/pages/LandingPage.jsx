@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import LandingProductCard from '../components/LandingProductCard';
 import { products } from '../data/mockData';
 import logo from '../assets/logo.png';
+import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
 
 const LandingPage = () => {
@@ -13,6 +14,7 @@ const LandingPage = () => {
   const aboutRef = useRef(null);
   const productsRef = useRef(null);
   const contactRef = useRef(null);
+  const navigate = useNavigate();
 
   const featuredProducts = products.slice(0, 6);
 
@@ -20,10 +22,10 @@ const LandingPage = () => {
     ref.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleSendMessage = async () => {
+  const handleSendMessage = (e) => {
     try{
-      const res = await api.post('/api/messages', { name, email, message });
-      console.log(res);
+      e.preventDefault();
+      navigate('login')
     } catch (error) {
       console.error('Error sending message', error);
     } finally {
